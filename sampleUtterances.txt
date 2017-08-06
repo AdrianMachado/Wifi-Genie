@@ -1,0 +1,35 @@
+GetPassword What's the wifi password
+GetPassword ask wifi genie for the wifi password
+GetPassword ask wifi genie for the password
+GetPassword ask wifi genie what the password is
+GetPassword What is the wifi password
+GetPassword What is the password
+GetPassword Give me the wifi password
+GetPassword Tell me the wifi password
+GetNetworkName What's the wifi network name
+GetNetworkName What is the network name
+GetNetworkName Give me the network name
+GetNetworkName Give me the wifi network name
+GetNetworkName Tell me the network name
+GetNetworkName ask wifi genie for the network name
+GetNetworkName ask wifi genie what the network name is
+SetPassword The password is {one} {two} {three} {four} {five} {six} {seven} {eight} {nine} {ten} {eleven} {twelve} {thirteen}  {fourteen} {fifteen} {sixteen}
+SetPassword The wifi password is {one} {two} {three} {four} {five} {six} {seven} {eight} {nine} {ten} {eleven} {twelve} {thirteen}  {fourteen} {fifteen} {sixteen}
+SetPassword Set the password to {one} {two} {three} {four} {five} {six} {seven} {eight} {nine} {ten} {eleven} {twelve} {thirteen}  {fourteen} {fifteen} {sixteen}
+SetPassword Set the wifi password to {one} {two} {three} {four} {five} {six} {seven} {eight} {nine} {ten} {eleven} {twelve} {thirteen}  {fourteen} {fifteen} {sixteen}
+SetPassword Set the wifi password to {one} {two}
+SetPassword Set the wifi password to
+SetPassword Ask wifi genie to set the password to {one} {two} {three} {four} {five} {six} {seven} {eight} {nine} {ten} {eleven} {twelve} {thirteen}  {fourteen} {fifteen} {sixteen}
+SetPassword Ask wifi genie to set the wifi password to {one} {two} {three} {four} {five} {six} {seven} {eight} {nine} {ten} {eleven} {twelve} {thirteen}  {fourteen} {fifteen} {sixteen}
+SetNetworkName The network name is {one} {two} {three} {four} {five} {six} {seven} {eight} {nine} {ten} {eleven} {twelve} {thirteen}  {fourteen} {fifteen} {sixteen}
+SetNetworkName The wifi network name is {one} {two} {three} {four} {five} {six} {seven} {eight} {nine} {ten} {eleven} {twelve} {thirteen}  {fourteen} {fifteen} {sixteen}
+SetNetworkName Set the network name to {one} {two} {three} {four} {five} {six} {seven} {eight} {nine} {ten} {eleven} {twelve} {thirteen}  {fourteen} {fifteen} {sixteen}
+SetNetworkName Set the network name to {one} {two}
+SetNetworkName Set the network name to
+SetNetworkName Set the wifi network name to {one} {two} {three} {four} {five} {six} {seven} {eight} {nine} {ten} {eleven} {twelve} {thirteen}  {fourteen} {fifteen} {sixteen}
+SetNetworkName Ask wifi genie to set the wifi network name to {one} {two} {three} {four} {five} {six} {seven} {eight} {nine} {ten} {eleven} {twelve} {thirteen}  {fourteen} {fifteen} {sixteen}
+SetNetworkName Ask wifi genie to set the network name to {one} {two} {three} {four} {five} {six} {seven} {eight} {nine} {ten} {eleven} {twelve} {thirteen}  {fourteen} {fifteen} {sixteen}
+AMAZON.StopIntent Stop
+AMAZON.StopIntent Wifi genie stop
+AMAZON.CancelIntent Cancel
+AMAZON.CancelIntent Wifi genie cancel

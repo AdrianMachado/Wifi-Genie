@@ -1,0 +1,157 @@
+{
+  "intents": [
+    {
+      "intent": "GetPassword"
+    },
+    {
+      "intent": "GetNetworkName"
+    },
+    {
+      "slots": [
+        {
+          "name": "one",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "two",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "three",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "four",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "five",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "six",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "seven",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "eight",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "nine",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "ten",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "eleven",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "twelve",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "thirteen",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "fourteen",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "fifteen",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "sixteen",
+          "type": "LIST_OF_CHARACTERS"
+        }
+      ],
+      "intent": "SetPassword"
+    },
+    {
+      "slots": [
+        {
+          "name": "one",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "two",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "three",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "four",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "five",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "six",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "seven",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "eight",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "nine",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "ten",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "eleven",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "twelve",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "thirteen",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "fourteen",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "fifteen",
+          "type": "LIST_OF_CHARACTERS"
+        },
+        {
+          "name": "sixteen",
+          "type": "LIST_OF_CHARACTERS"
+        }
+      ],
+      "intent": "SetNetworkName"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
+    }
+  ]
+}
