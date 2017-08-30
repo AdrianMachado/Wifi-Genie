@@ -1,5 +1,8 @@
 'use strict';
-
+var dynasty = require('dynasty')({});
+var dataTable = function() {
+    return dynasty.table('WifiGenieData');
+};
 // --------------- Helpers that build all of the responses -----------------------
 
 function buildSpeechletResponse(title, output, repromptText, shouldEndSession) {
@@ -64,11 +67,34 @@ function getHelpResponse(callback) {
         buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
 }
 
-function handleSessionEndRequest(callback) {
+function handleSessionEndRequest(sessionEndedRequest, session, callback) {
     const cardTitle = 'Thanks for using Wifi Genie';
     const speechOutput = 'Thank you for using the skill. Have a nice day!';
+    const sessionAttributes = session.attributes;
+    let sessionPackage;
+    if(sessionAttributes.networkName) {
+        sessionPackage = {networkName: sessionAttributes.networkName};
+    }
+    if(sessionAttributes.password) {
+        if(sessionPackage){
+            sessionPackage = Object.assign(sessionPackage ,{password: sessionAttributes.password});
+        } else {
+            sessionPackage = {password: sessionAttributes.password};
+        }
+        
+    }
+    if (sessionPackage) {
+        dataTable().insert({
+            userid: session.user.userId,
+            Data: JSON.stringify(sessionPackage)
+        });
+        console.log('Insertion Complete');
+    }
     // Setting this to true ends the session and exits the skill.
     const shouldEndSession = true;
+
+    
+    console.log(sessionPackage);
 
     callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
 }
@@ -85,6 +111,25 @@ function createPasswordAttributes(password, networkName) {
         password,
         networkName
     };
+}
+
+function loadUserData(session) {
+    console.log('Session id: ');
+    console.log(session.user.userId);
+    return dataTable().find(session.user.userId).then(
+        function(result) {
+            var data = {};
+            if(result) {
+                data = JSON.parse(result['Data']);
+            }
+            console.log('Result');
+            console.log(result);
+            return data;
+        }
+    )
+    .catch(function(error) {
+        console.log(error);
+    });
 }
 
 function setPasswordInSession(intent, session, callback) {
@@ -157,43 +202,83 @@ function getPasswordFromSession(intent, session, callback) {
     let characters;
     const repromptText = "I didn't quite catch that! Please repeat the wifi password, starting with the phrase" +
         "The password is...";
-    const sessionAttributes = session.attributes;
+    let sessionAttributes = session.attributes;
     let shouldEndSession = false;
     let speechOutput = '';
-    
-    if (sessionAttributes && sessionAttributes.password) {
-        characters = sessionAttributes.password;
-        speechOutput = `Your wifi password is ${characters.join(' ')}.`;
-        shouldEndSession = true;
-    } 
-    else {
-        speechOutput = "I'm not sure what your password is, you can say, the wifi password " +
-            ' is, and then repeat the password, one character at a time';
+    if (!sessionAttributes.password) {
+        loadUserData(session).then(function(data){
+            console.log(data);
+            if(data) {
+                console.log('I have user data');
+                sessionAttributes = createPasswordAttributes(data.password, data.networkName);
+            }
+            if (sessionAttributes && sessionAttributes.password) {
+                characters = sessionAttributes.password;
+                speechOutput = `Your wifi password is ${characters.join(' ')}.`;
+                shouldEndSession = true;
+            } 
+            else {
+                speechOutput = "I'm not sure what your password is, you can say, the wifi password " +
+                    ' is, and then repeat the password, one character at a time';
+            }
+            callback(sessionAttributes,
+                buildSpeechletResponse(intent.name, speechOutput, repromptText, shouldEndSession));
+        });        
+    } else {
+        if (sessionAttributes && sessionAttributes.password) {
+            characters = sessionAttributes.password;
+            speechOutput = `Your wifi password is ${characters.join(' ')}.`;
+            shouldEndSession = true;
+        } 
+        else {
+            speechOutput = "I'm not sure what your password is, you can say, the wifi password " +
+                ' is, and then repeat the password, one character at a time';
+        }
+        callback(sessionAttributes,
+         buildSpeechletResponse(intent.name, speechOutput, repromptText, shouldEndSession));
     }
     
-    callback(sessionAttributes,
-         buildSpeechletResponse(intent.name, speechOutput, repromptText, shouldEndSession));
+    
+    
 }
 
 function getNetworkNameFromSession(intent, session, callback) {
     let characters;
     const repromptText = "I didn't quite catch that! Please repeat the network name, starting with the phrase" +
         "The network name is...";
-    const sessionAttributes = session.attributes;
+    let sessionAttributes = session.attributes;
     let shouldEndSession = false;
     let speechOutput = '';
-
-    if (sessionAttributes && sessionAttributes.networkName) {
-        characters = sessionAttributes.networkName;
-        speechOutput = `Your network name is ${characters.join(' ')}.`;
-        shouldEndSession = true;
+    if (!sessionAttributes.networkName) {
+        loadUserData(session).then(function(data){
+            console.log(data);
+            if (data) {
+                console.log('I have user data');
+                sessionAttributes = createNetworkNameAttributes(data.networkName, data.password);
+            }
+            if (sessionAttributes && sessionAttributes.networkName) {
+                characters = sessionAttributes.networkName;
+                speechOutput = `Your network name is ${characters.join(' ')}.`;
+                shouldEndSession = true;
+            } else {
+                speechOutput = "I'm not sure what your network name is, you can say, the network name " +
+                    ' is, and then repeat the name, one character at a time';
+            }
+            callback(sessionAttributes,
+                buildSpeechletResponse(intent.name, speechOutput, repromptText, shouldEndSession));
+        });
     } else {
-        speechOutput = "I'm not sure what your network name is, you can say, the network name " +
-            ' is, and then repeat the name, one character at a time';
-    }
-
-    callback(sessionAttributes,
+        if (sessionAttributes && sessionAttributes.networkName) {
+            characters = sessionAttributes.networkName;
+            speechOutput = `Your network name is ${characters.join(' ')}.`;
+            shouldEndSession = true;
+        } else {
+            speechOutput = "I'm not sure what your network name is, you can say, the network name " +
+                ' is, and then repeat the name, one character at a time';
+        }
+        callback(sessionAttributes,
          buildSpeechletResponse(intent.name, speechOutput, repromptText, shouldEndSession));
+    }
 }
 
 
@@ -211,7 +296,6 @@ function onSessionStarted(sessionStartedRequest, session) {
  */
 function onLaunch(launchRequest, session, callback) {
     console.log(`onLaunch requestId=${launchRequest.requestId}, sessionId=${session.sessionId}`);
-
     // Dispatch to your skill's launch.
     getWelcomeResponse(callback);
 }
@@ -237,7 +321,7 @@ function onIntent(intentRequest, session, callback) {
     } else if (intentName === 'AMAZON.HelpIntent') {
         getHelpResponse(callback);
     } else if (intentName === 'AMAZON.StopIntent' || intentName === 'AMAZON.CancelIntent') {
-        handleSessionEndRequest(callback);
+        handleSessionEndRequest(intentRequest, session, callback);
     } else {
         throw new Error('Invalid intent');
     }
@@ -248,6 +332,29 @@ function onIntent(intentRequest, session, callback) {
  * Is not called when the skill returns shouldEndSession=true.
  */
 function onSessionEnded(sessionEndedRequest, session) {
+    const sessionAttributes = session.attributes;
+    let sessionPackage;
+    if(sessionAttributes.networkName) {
+        sessionPackage = {networkName: sessionAttributes.networkName};
+    }
+    if(sessionAttributes.password) {
+        if(sessionPackage){
+            sessionPackage = Object.assign(sessionPackage ,{password: sessionAttributes.password});
+        } else {
+            sessionPackage = {password: sessionAttributes.password};
+        }
+        
+    }
+    if (sessionPackage) {
+        dataTable().insert({
+            userid: session.user.userId,
+            Data: JSON.stringify(sessionPackage)
+        });
+        console.log('Insertion Complete');
+    }
+    
+    
+    console.log(sessionPackage);
     console.log(`onSessionEnded requestId=${sessionEndedRequest.requestId}, sessionId=${session.sessionId}`);
 }
 
