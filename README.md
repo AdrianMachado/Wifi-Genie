@@ -8,5 +8,4 @@ The `schema` is the schema specified on your Alexa skill, along with the custom 
 
 For the best experience, train your NLP engine with the sample utterances provided
 
-# Planned Changes
-Integrating DynamoDB in order to permanently store the user's data
+You will need a DynamoDB table called `WifiGenieData` in order to store the passwords
